@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){
 		fseek(file, 0, SEEK_END);
 
     	int size = ftell(file);
-		char buffer[__SCHAR_MAX__];
+		char buffer[size];
 		int work[size];
 
 		fseek(file, 0, SEEK_SET);
@@ -21,8 +21,9 @@ int main(int argc, char *argv[]){
 		printf("Size %d\n", size);
 
 		int i = 0;
-		while(fread(buffer, sizeof(char), sizeof(buffer), file) != 0) {
-        	work[i] = atoi(buffer);
+		while(feof(file) == 0) {
+        	fread(buffer, sizeof(char), sizeof(buffer), file);
+			work[i] = atoi(buffer);
 			printf("%s", buffer);
 			i++;
     	}
