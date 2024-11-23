@@ -36,7 +36,11 @@ int main(int argc, char *argv[]){
 		for(int i = 0; i < size; i++){
 			printf("%d\n", buffer[i]);
 		}
-		quickSort(buffer, 0, sizeof(buffer));
+		quickSort(buffer, 0, size-1);
+
+		for(int i = 0; i < size; i++){
+			printf("%d\n", buffer[i]);
+		}
 
 		fclose(file);
 	}else{
@@ -48,10 +52,13 @@ int main(int argc, char *argv[]){
 
 void quickSort(int values[], int left, int right){
 	if (left < right) {
-		printf("quickSort\n");
+		printf("quickSort    left : %d  -- right %d\n", left, right);
 		int pivot = partition(values, left, right);
+		printf("pivo : %d\n", pivot);
 		quickSort(values, left, pivot - 1);
+		printf("quick1  vleft : %d   --   vight : %d\n", values[0], values[pivot - 1]);
 		quickSort(values, pivot + 1, right);	
+		printf("quick2  vleft : %d   --   vight : %d\n", values[pivot + 1], values[right]);
 	}
 }
 
@@ -64,12 +71,18 @@ void swap(int* a, int* b){
 
 int partition(int arr[], int left, int right){
 	printf("partition\n");
-    int mid = left + (right - left) / 2;
+	int mid = 0;
+	if((left+right)%2 == 0){
+		mid = left+right/2;
+	}else{
+		mid = (left+right/2)+0.5;
+	}
     int pivot = arr[mid];
-    
+    printf("valorNoPivo : %d  --- mid : %d\n", pivot, mid);
     swap(&arr[mid], &arr[right]);
     
     int i = left - 1;
+	printf("left-1  :::: %d\n", i);
     for (int j = left; j < right; j++) {
         if (arr[j] <= pivot) {
             i++;
