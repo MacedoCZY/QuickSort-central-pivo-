@@ -16,11 +16,20 @@ int main(int argc, char *argv[]){
 			return -1;
 		}
 
-		fseek(file, 0, SEEK_END);
+		int j = 0;
+		int k = 0;
+		fscanf (file, "%d", &j);   
+		while (!feof (file))
+		{  
+			fscanf (file, "%d", &j);
+			k++;      
+			printf("k : %d\n", k);
+		}
 
-    	int size = (ftell(file)/2)+0.5;
+    	int size = k;
 		int buffer[size];
 		printf("size : %d\n", size);
+		
 		fseek(file, 0, SEEK_SET);
 
 		int i = 0;
@@ -34,7 +43,7 @@ int main(int argc, char *argv[]){
 		}
 
 		for(int i = 0; i < size; i++){
-			printf("%d\n", buffer[i]);
+			printf("Antes : %d\n", buffer[i]);
 		}
 		quickSort(buffer, 0, size-1);
 
@@ -72,18 +81,19 @@ void swap(int* a, int* b){
 int partition(int arr[], int left, int right){
 	printf("partition\n");
 	int mid = 0;
-	if((left+right)%2 == 0){
-		mid = left+right/2;
-	}else{
-		mid = (left+right/2)+0.5;
-	}
+	mid = left+(right-left)/2;
+	// if((left+right)%2 == 0){
+	// 	mid = left+right/2;
+	// }else{
+	// 	mid = (left+right/2)+0.5;
+	// }
     int pivot = arr[mid];
     printf("valorNoPivo : %d  --- mid : %d\n", pivot, mid);
     swap(&arr[mid], &arr[right]);
     
     int i = left - 1;
 	printf("left-1  :::: %d\n", i);
-    for (int j = left; j < right; j++) {
+    for(int j = left; j < right; j++) {
         if (arr[j] <= pivot) {
             i++;
             swap(&arr[i], &arr[j]);
