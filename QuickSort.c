@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <time.h>
 
 int partition(int arr[], int left, int right);
 void quickSort(int values[], int left, int right);
@@ -23,12 +24,12 @@ int main(int argc, char *argv[]){
 		{  
 			fscanf (file, "%d", &j);
 			k++;      
-			printf("k : %d\n", k);
 		}
 
-    	int size = k;
-		int buffer[size];
-		printf("size : %d\n", size);
+    	long unsigned int size = k;
+		// printf("size : %d\n", size);
+
+		int *buffer = (int *)malloc(size * sizeof(int));
 		
 		fseek(file, 0, SEEK_SET);
 
@@ -42,10 +43,17 @@ int main(int argc, char *argv[]){
 			i++;      
 		}
 
-		for(int i = 0; i < size; i++){
-			printf("Antes : %d\n", buffer[i]);
-		}
+		// for(int i = 0; i < size; i++){
+		// 	printf("Antes : %d\n", buffer[i]);
+		// }
+
+		clock_t start = clock();
 		quickSort(buffer, 0, size-1);
+		clock_t end = clock();
+		
+		clock_t result = ((double)(end-start))/CLOCKS_PER_SEC;
+
+		printf("Exec time: %lf\n", result);
 
 		for(int i = 0; i < size; i++){
 			printf("%d\n", buffer[i]);
@@ -61,38 +69,37 @@ int main(int argc, char *argv[]){
 
 void quickSort(int values[], int left, int right){
 	if (left < right) {
-		printf("quickSort    left : %d  -- right %d\n", left, right);
+		//printf("quickSort    left : %d  -- right %d\n", left, right);
 		int pivot = partition(values, left, right);
-		printf("pivo : %d\n", pivot);
+		//printf("pivo : %d\n", pivot);
 		quickSort(values, left, pivot - 1);
-		printf("quick1  vleft : %d   --   vight : %d\n", values[0], values[pivot - 1]);
+		//printf("quick1  vleft : %d   --   vight : %d\n", values[0], values[pivot - 1]);
 		quickSort(values, pivot + 1, right);	
-		printf("quick2  vleft : %d   --   vight : %d\n", values[pivot + 1], values[right]);
+		//printf("quick2  vleft : %d   --   vight : %d\n", values[pivot + 1], values[right]);
 	}
 }
 
 void swap(int* a, int* b){
-	printf("swap\n");
+	//printf("swap\n");
     int aux = *a;
     *a = *b;
     *b = aux;
 }
 
 int partition(int arr[], int left, int right){
-	printf("partition\n");
+	//printf("partition\n");
 	int mid = 0;
 	mid = left+(right-left)/2;
-	// if((left+right)%2 == 0){
-	// 	mid = left+right/2;
-	// }else{
-	// 	mid = (left+right/2)+0.5;
-	// }
+
     int pivot = arr[mid];
-    printf("valorNoPivo : %d  --- mid : %d\n", pivot, mid);
+    //printf("valorNoPivo : %d  --- mid : %d\n", pivot, mid);
     swap(&arr[mid], &arr[right]);
     
-    int i = left - 1;
-	printf("left-1  :::: %d\n", i);
+	int i = left-1;
+	// if(left - 1 > 0){
+	// 	i = left - 1;
+	// }
+    //printf("left =  %d\n", i);
     for(int j = left; j < right; j++) {
         if (arr[j] <= pivot) {
             i++;
