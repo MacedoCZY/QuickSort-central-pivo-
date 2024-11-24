@@ -5,7 +5,7 @@
 #include <time.h>
 
 int partition(int arr[], int left, int right);
-void quickSort(int values[], int left, int right);
+clock_t quickSort(int values[], int left, int right);
 void swap(int* a, int* b);
 
 int main(int argc, char *argv[]){
@@ -65,12 +65,15 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
-void quickSort(int values[], int left, int right){
+clock_t quickSort(int values[], int left, int right){
+	clock_t start = clock();
 	if (left < right) {
 		int pivot = partition(values, left, right);
 		quickSort(values, left, pivot - 1);
 		quickSort(values, pivot + 1, right);	
 	}
+	clock_t end = clock();
+	return ((double)(end-start))/CLOCKS_PER_SEC;
 }
 
 void swap(int* a, int* b){
