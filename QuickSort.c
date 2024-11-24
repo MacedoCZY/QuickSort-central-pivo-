@@ -5,7 +5,7 @@
 #include <time.h>
 
 int partition(int arr[], int left, int right);
-void quickSort(int values[], int left, int right);
+clock_t quickSort(int values[], int left, int right);
 void swap(int* a, int* b);
 
 int main(int argc, char *argv[]){
@@ -27,7 +27,6 @@ int main(int argc, char *argv[]){
 		}
 
     	long unsigned int size = k;
-		// printf("size : %d\n", size);
 
 		int *buffer = (int *)malloc(size * sizeof(int));
 		
@@ -43,21 +42,9 @@ int main(int argc, char *argv[]){
 			i++;      
 		}
 
-		// for(int i = 0; i < size; i++){
-		// 	printf("Antes : %d\n", buffer[i]);
-		// }
+		clock_t result = quickSort(buffer, 0, size-1);
 
-		clock_t start = clock();
-		quickSort(buffer, 0, size-1);
-		clock_t end = clock();
-		
-		clock_t result = ((double)(end-start))/CLOCKS_PER_SEC;
-
-		printf("Exec time: %lf\n", result);
-
-		for(int i = 0; i < size; i++){
-			printf("%d\n", buffer[i]);
-		}
+		printf("Exec time: %.100llf\n", result);
 
 		fclose(file);
 	}else{
@@ -67,40 +54,32 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
-void quickSort(int values[], int left, int right){
+clock_t quickSort(int values[], int left, int right){
+	clock_t start = clock();
 	if (left < right) {
-		//printf("quickSort    left : %d  -- right %d\n", left, right);
 		int pivot = partition(values, left, right);
-		//printf("pivo : %d\n", pivot);
 		quickSort(values, left, pivot - 1);
-		//printf("quick1  vleft : %d   --   vight : %d\n", values[0], values[pivot - 1]);
 		quickSort(values, pivot + 1, right);	
-		//printf("quick2  vleft : %d   --   vight : %d\n", values[pivot + 1], values[right]);
 	}
+	clock_t end = clock();
+	return ((double)(end-start))/CLOCKS_PER_SEC;
 }
 
 void swap(int* a, int* b){
-	//printf("swap\n");
-    int aux = *a;
+	 int aux = *a;
     *a = *b;
     *b = aux;
 }
 
 int partition(int arr[], int left, int right){
-	//printf("partition\n");
 	int mid = 0;
 	mid = left+(right-left)/2;
 
     int pivot = arr[mid];
-    //printf("valorNoPivo : %d  --- mid : %d\n", pivot, mid);
     swap(&arr[mid], &arr[right]);
     
 	int i = left-1;
-	// if(left - 1 > 0){
-	// 	i = left - 1;
-	// }
-    //printf("left =  %d\n", i);
-    for(int j = left; j < right; j++) {
+  	for(int j = left; j < right; j++) {
         if (arr[j] <= pivot) {
             i++;
             swap(&arr[i], &arr[j]);
