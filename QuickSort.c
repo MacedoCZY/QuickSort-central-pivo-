@@ -27,7 +27,6 @@ int main(int argc, char *argv[]){
 		}
 
     	long unsigned int size = k;
-		// printf("size : %d\n", size);
 
 		int *buffer = (int *)malloc(size * sizeof(int));
 		
@@ -43,22 +42,21 @@ int main(int argc, char *argv[]){
 			i++;      
 		}
 
-		// for(int i = 0; i < size; i++){
-		// 	printf("Antes : %d\n", buffer[i]);
-		// }
 
-		clock_t start = clock();
+		clock_t Ticks[2];
+		Ticks[0] = clock();
 		quickSort(buffer, 0, size-1);
-		clock_t end = clock();
+		Ticks[1] = clock();
+		double result = (Ticks[1] - Ticks[0]) * 1000 / CLOCKS_PER_SEC;
+
+		printf("Exec time: %llf\n", result/1000);
+	
+		fclose(file);
 		
-		clock_t result = ((double)(end-start))/CLOCKS_PER_SEC;
-
-		printf("Exec time: %lf\n", result);
-
+		file = fopen("resultado.txt", "w+");
 		for(int i = 0; i < size; i++){
-			printf("%d\n", buffer[i]);
+			fprintf(file, "%d\n", buffer[i]);
 		}
-
 		fclose(file);
 	}else{
 		printf("Erro in arguments!\n");
@@ -69,38 +67,27 @@ int main(int argc, char *argv[]){
 
 void quickSort(int values[], int left, int right){
 	if (left < right) {
-		//printf("quickSort    left : %d  -- right %d\n", left, right);
 		int pivot = partition(values, left, right);
-		//printf("pivo : %d\n", pivot);
 		quickSort(values, left, pivot - 1);
-		//printf("quick1  vleft : %d   --   vight : %d\n", values[0], values[pivot - 1]);
 		quickSort(values, pivot + 1, right);	
-		//printf("quick2  vleft : %d   --   vight : %d\n", values[pivot + 1], values[right]);
 	}
 }
 
 void swap(int* a, int* b){
-	//printf("swap\n");
-    int aux = *a;
+	int aux = *a;
     *a = *b;
     *b = aux;
 }
 
 int partition(int arr[], int left, int right){
-	//printf("partition\n");
 	int mid = 0;
 	mid = left+(right-left)/2;
 
     int pivot = arr[mid];
-    //printf("valorNoPivo : %d  --- mid : %d\n", pivot, mid);
     swap(&arr[mid], &arr[right]);
     
 	int i = left-1;
-	// if(left - 1 > 0){
-	// 	i = left - 1;
-	// }
-    //printf("left =  %d\n", i);
-    for(int j = left; j < right; j++) {
+	for(int j = left; j < right; j++) {
         if (arr[j] <= pivot) {
             i++;
             swap(&arr[i], &arr[j]);
