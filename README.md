@@ -1,2 +1,2 @@
-## QuickSortCentral
-#Entrada argv[1]
+# QuickSortCentral
+## Entrada argv[1]
