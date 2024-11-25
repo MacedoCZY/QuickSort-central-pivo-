@@ -47,9 +47,9 @@ int main(int argc, char *argv[]){
 		Ticks[0] = clock();
 		quickSort(buffer, 0, size-1);
 		Ticks[1] = clock();
-		double result = (Ticks[1] - Ticks[0]) / CLOCKS_PER_SEC;
+		double result = (Ticks[1] - Ticks[0]) * 1000 / CLOCKS_PER_SEC;
 
-		printf("Exec time: %lf\n", result);
+		printf("Exec time: %lf\n", result/1000);
 	
 		fclose(file);
 		
