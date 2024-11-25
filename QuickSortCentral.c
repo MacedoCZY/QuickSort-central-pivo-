@@ -5,7 +5,7 @@
 #include <time.h>
 
 int partition(int arr[], int left, int right);
-clock_t quickSort(int values[], int left, int right);
+void quickSort(int values[], int left, int right);
 void swap(int* a, int* b);
 
 int main(int argc, char *argv[]){
@@ -47,9 +47,9 @@ int main(int argc, char *argv[]){
 		Ticks[0] = clock();
 		quickSort(buffer, 0, size-1);
 		Ticks[1] = clock();
-		double result = (Ticks[1] - Ticks[0]) * 1000 / CLOCKS_PER_SEC;
+		double result = (Ticks[1] - Ticks[0]) / CLOCKS_PER_SEC;
 
-		printf("Exec time: %llf\n", result/1000);
+		printf("Exec time: %lf\n", result);
 	
 		fclose(file);
 		
@@ -65,15 +65,12 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
-clock_t quickSort(int values[], int left, int right){
-	clock_t start = clock();
+void quickSort(int values[], int left, int right){
 	if (left < right) {
 		int pivot = partition(values, left, right);
 		quickSort(values, left, pivot - 1);
 		quickSort(values, pivot + 1, right);	
 	}
-	clock_t end = clock();
-	return ((double)(end-start))/CLOCKS_PER_SEC;
 }
 
 void swap(int* a, int* b){
