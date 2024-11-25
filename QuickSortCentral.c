@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
 			k++;      
 		}
 
-    	long unsigned int size = k;
+    		long unsigned int size = k;
 
 		int *buffer = (int *)malloc(size * sizeof(int));
 		
