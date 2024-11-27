@@ -42,22 +42,26 @@ int main(int argc, char *argv[]){
 			i++;      
 		}
 
-
-		clock_t Ticks[2];
-		Ticks[0] = clock();
-		quickSort(buffer, 0, size-1);
-		Ticks[1] = clock();
-		double result = (Ticks[1] - Ticks[0]) * 1000 / CLOCKS_PER_SEC;
-
-		printf("Exec time: %lf\n", result/1000);
-	
 		fclose(file);
+
+		clock_t start, end;
+		
+		start = clock();
+		
+		quickSort(buffer, 0, size-1);
+		
+		end = clock();
+		
+		double result = ((double)(end - start))/CLOCKS_PER_SEC;
+
+		printf("Exec time: %.6f\n", result);
 		
 		file = fopen("resultado.txt", "w+");
 		for(int i = 0; i < size; i++){
 			fprintf(file, "%d\n", buffer[i]);
 		}
 		fclose(file);
+		free(buffer);
 	}else{
 		printf("Erro in arguments!\n");
 		return -1;
