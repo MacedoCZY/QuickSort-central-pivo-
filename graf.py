@@ -40,7 +40,7 @@ plt.plot(x_data, by_data_parcialmente_ordenados, label="Parcialmente ordenados A
 plt.plot(x_data, by_data_ordenados, label="Ordenados Aleatório")
 
 plt.xticks([ 10000,100000, 250000, 500000, 1000000, 1500000, 2000000], rotation=70)
-plt.yticks(np.arange(0, 3, step=500))
+plt.yticks(np.arange(0, 2.3, step=0.1))
 plt.ticklabel_format(style='plain')
 plt.tight_layout()
 
