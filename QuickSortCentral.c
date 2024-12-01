@@ -69,35 +69,35 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
-void quickSort(int values[], int left, int right){
-	if (left < right) {
-		int pivot = partition(values, left, right);
-		quickSort(values, left, pivot - 1);
-		quickSort(values, pivot + 1, right);	
+void quickSort(int values[], int left, int right){ // O(log n) chamadas recursivas
+	if (left < right) { // O(1) - condição de parada
+		int pivot = partition(values, left, right); // O(n) - custo do particionamento
+		quickSort(values, left, pivot - 1); // O(log n) - chamada recursiva para o lado esquerdo
+		quickSort(values, pivot + 1, right); // O(log n) - chamada recursiva para o lado direito
 	}
 }
 
-void swap(int* a, int* b){
-	int aux = *a;
-    *a = *b;
-    *b = aux;
+void swap(int* a, int* b){ // O(1) - troca de dois elementos
+	int aux = *a; // O(1)
+    *a = *b; // O(1)
+    *b = aux; // O(1)
 }
 
-int partition(int arr[], int left, int right){
-	int mid = 0;
-	mid = left+(right-left)/2;
+int partition(int arr[], int left, int right){ // O(n) - custo do particionamento
+	int mid = 0; // O(1)
+	mid = left+(right-left)/2; // O(1)
 
-    int pivot = arr[mid];
-    swap(&arr[mid], &arr[right]);
+    int pivot = arr[mid]; // O(1)
+    swap(&arr[mid], &arr[right]); // O(1) - troca o pivô com o último elemento
     
-	int i = left-1;
-	for(int j = left; j < right; j++) {
-        if (arr[j] <= pivot) {
-            i++;
-            swap(&arr[i], &arr[j]);
+	int i = left-1; // O(1)
+	for(int j = left; j < right; j++) { // O(n) - loop que percorre o array
+        if (arr[j] <= pivot) { // O(1) - comparação
+            i++; // O(1)
+            swap(&arr[i], &arr[j]); // O(1) - troca
         }
     }
     
-    swap(&arr[i + 1], &arr[right]);
-    return i + 1;
+    swap(&arr[i + 1], &arr[right]); // O(1) - troca final
+    return i + 1; // O(1)
 }
